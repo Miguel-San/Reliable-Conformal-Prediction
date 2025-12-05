@@ -29,7 +29,7 @@ In the folder `Examples` of this repository you can find some simple usage examp
 
 ## Citation
 If any part of our paper and/or repository is helpful to your work, we would appreciate citations with:
-```
+```bibtex
 @article{sanchezdominguez2025reliable,
   title={Reliable Statistical Guarantees for Conformal Predictors with Small Datasets},
   author={S{\'a}nchez-Dom{\'\i}nguez, Miguel and Lacasa, Lucas and de Vicente,
