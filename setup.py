@@ -1,7 +1,7 @@
 import setuptools
 from reliable_conformal_prediction import __version__
 
-with open("README.md", "r", encoding='ascii') as fh:
+with open("README.md", "r", encoding='utf-8') as fh:
     long_description = fh.read()
 
 with open("requirements.txt", "r", encoding='ascii') as fr:
