@@ -67,7 +67,7 @@ mapie.conformalize(X_cal, y_cal)
 - `get_quantile` is replaced by `get_index` (the order-statistic index) and `get_threshold` (the threshold itself, from the calibration scores), so that quantile levels are never converted back into thresholds.
 - Infeasible requests return the index `n + 1` (threshold `inf`) with an `InfeasibleRequestWarning`, instead of `NaN` without a warning. `classic_conf_pred_wrapper` raises a `ValueError` for them.
 - `get_minsize(min_cov, conf)` gives the minimum calibration size of the new procedure, and `get_minsize(min_cov, conf, nom_cov=...)` that of the standard procedure. `get_mincov` takes `nom_cov` (standard procedure) or `min_cov` (new procedure).
-- New functions `get_index_standard` and `get_confidence`, and tests in `tests/`.
+- New functions `get_index_standard` and `get_confidence`.
 
 **1.0.0**
 - First release.
