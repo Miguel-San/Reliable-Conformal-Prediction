@@ -17,7 +17,7 @@ This repository is the open access, user-friendly software implementation of the
 The methods implemented in this repo can be easily installed as a Python package using
 
 ```console
-pip install git+https://github.com/Miguel-San/Reliable-Conformal-Prediction.git
+pip install git+https://github.com/Miguel-San/Reliable-Conformal-Prediction.git@v2.0.0
 ```
 
 Once installed, methods can be accessed by
@@ -26,6 +26,51 @@ import reliable_conformal_prediction
 ```
 
 In the folder `Examples` of this repository you can find some simple usage examples for the methods implemented in this package.
+
+## Usage
+
+The new procedure takes a requested minimum coverage `min_cov` and a confidence `conf`, and uses the smallest order statistic of the calibration scores that guarantees `P(C >= min_cov) >= conf` for the realised coverage `C`. This index has the closed form `1 + Q(conf)`, where `Q` is the quantile function of `Binomial(n, min_cov)`.
+
+```python
+import numpy as np
+import reliable_conformal_prediction as rcp
+
+scores = np.abs(y_cal - model.predict(X_cal))  # non-conformity scores of the calibration set
+n, min_cov, conf = len(scores), 0.9, 0.95
+
+m = rcp.get_index(n, min_cov, conf)                   # order statistic of the new procedure
+threshold = rcp.get_threshold(scores, min_cov, conf)  # the m-th smallest score
+# prediction interval for a new input x: model.predict(x) -/+ threshold
+
+rcp.get_minsize(min_cov, conf)              # minimum calibration size for this request (29)
+rcp.get_mincov(n, conf, min_cov=min_cov)    # achieved minimum coverage, C^min* >= min_cov
+rcp.get_confidence(n, m, min_cov)           # achieved confidence, P(C >= min_cov) >= conf
+rcp.get_mincov(n, conf, nom_cov=0.9)        # what the standard procedure guarantees at the same confidence
+```
+
+If the calibration set is too small for the request (`n < get_minsize(min_cov, conf)`), no order statistic is large enough: `get_index` returns `n + 1`, `get_threshold` returns `inf` (a trivial prediction set), and both issue an `InfeasibleRequestWarning` that reports the minimum size and what the data can certify.
+
+With [MAPIE](https://github.com/scikit-learn-contrib/MAPIE), `classic_conf_pred_wrapper` gives the confidence level that makes a split conformal regressor use the new procedure's threshold:
+
+```python
+from mapie.regression import SplitConformalRegressor
+
+level = rcp.classic_conf_pred_wrapper(n, min_cov, conf)
+mapie = SplitConformalRegressor(estimator=model, confidence_level=level, prefit=True)
+mapie.conformalize(X_cal, y_cal)
+```
+
+## Changelog
+
+**2.0.0**
+- The order statistic of the new procedure is computed with the exact closed form `1 + Q(conf)` instead of root finding. The root finding disagreed with the exact index in a few cases where the root lies very close to an integer (one of them below the requested confidence), and returned the level 0 for `n = 1`.
+- `get_quantile` is replaced by `get_index` (the order-statistic index) and `get_threshold` (the threshold itself, from the calibration scores), so that quantile levels are never converted back into thresholds.
+- Infeasible requests return the index `n + 1` (threshold `inf`) with an `InfeasibleRequestWarning`, instead of `NaN` without a warning. `classic_conf_pred_wrapper` raises a `ValueError` for them.
+- `get_minsize(min_cov, conf)` gives the minimum calibration size of the new procedure, and `get_minsize(min_cov, conf, nom_cov=...)` that of the standard procedure. `get_mincov` takes `nom_cov` (standard procedure) or `min_cov` (new procedure).
+- New functions `get_index_standard` and `get_confidence`, and tests in `tests/`.
+
+**1.0.0**
+- First release.
 
 ## Citation
 If any part of our paper and/or repository is helpful to your work, we would appreciate citations with:
