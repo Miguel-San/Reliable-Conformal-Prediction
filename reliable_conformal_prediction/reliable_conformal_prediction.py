@@ -210,7 +210,7 @@ def get_mincov(n, conf, nom_cov=None, min_cov=None):
 
     - ``nom_cov``: the standard procedure with nominal coverage ``nom_cov`` (index ``m*``);
     - ``min_cov``: the new procedure with requested minimum coverage ``min_cov`` (index ``m~``). The result is the
-      achieved bound ``C^min* >= min_cov``, which exceeds ``min_cov`` because the index is an integer.
+      achieved bound ``C^min,ach >= min_cov``, which exceeds ``min_cov`` because the index is an integer.
 
     Parameters
     ----------

@@ -26,6 +26,7 @@ import reliable_conformal_prediction
 ```
 
 In the folder `Examples` of this repository you can find some simple usage examples for the methods implemented in this package.
+The folder `paper` contains the notebooks that reproduce the figures of *Prescribing a Minimum Coverage in Split Conformal Prediction*, except those based on confidential industrial data.
 
 ## Usage
 
@@ -43,7 +44,7 @@ threshold = rcp.get_threshold(scores, min_cov, conf)  # the m-th smallest score
 # prediction interval for a new input x: model.predict(x) -/+ threshold
 
 rcp.get_minsize(min_cov, conf)              # minimum calibration size for this request (29)
-rcp.get_mincov(n, conf, min_cov=min_cov)    # achieved minimum coverage, C^min* >= min_cov
+rcp.get_mincov(n, conf, min_cov=min_cov)    # achieved minimum coverage, C^min,ach >= min_cov
 rcp.get_confidence(n, m, min_cov)           # achieved confidence, P(C >= min_cov) >= conf
 rcp.get_mincov(n, conf, nom_cov=0.9)        # what the standard procedure guarantees at the same confidence
 ```
