@@ -5,14 +5,12 @@ Notebooks that reproduce the figures of the paper by Sánchez-Domínguez, Lacasa
 
 | Notebook | Figures |
 |---|---|
-| `01_synthetic_example.ipynb` | 1, 2 and 3: synthetic example, probability of undercoverage and widths against the calibration size |
+| `01_synthetic_example.ipynb` | 1, 2 and 3: synthetic example; probability of undercoverage, quantile levels and widths against the calibration size |
 | `02_models_and_bins.ipynb` | 4 and 5: models of different complexity; input-dependent noise and calibration per regime |
 | `03_public_benchmark.ipynb` | 6: UCI Airfoil Self-Noise |
 | `04_critical_confidence.ipynb` | A.1: critical confidence of Appendix A |
 
-Fig. 9 (quantile levels of both procedures against the calibration size) comes from
-`../Examples/reliable_vs_classic_cp.ipynb`. Figs. 7 and 8 (industrial application) are not reproduced here, because
-their data are confidential (see below).
+Figs. 7 and 8 (industrial application) are not reproduced here, because their data are confidential (see below).
 
 The order-statistic indices, the achieved confidence and the guaranteed minimum coverage come from the package;
 `cp_tools.py` holds the synthetic data, the laws of the scores and the Monte Carlo routines, and `cp_plot.py` the
